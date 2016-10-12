@@ -62,11 +62,12 @@ void stackInit ( tStack* s ) {
 */
 
 	if (s == NULL) {
-		stackError(SERR_INIT);
+		stackError(SERR_INIT);		// Pokud dostaneme NULL, vypisujeme požadovaný error
 	} else {
-		s->top = -1;
+		s->top = -1;				// Jinak inicializujeme konec zásobníku
 	}
-	  solved = 0;                      /* V případě řešení, smažte tento řádek! */
+	
+	//  solved = 0;                      /* V případě řešení, smažte tento řádek! */
 }
 
 int stackEmpty ( const tStack* s ) {
@@ -77,7 +78,8 @@ int stackEmpty ( const tStack* s ) {
 */
 	
 	return (s->top == -1 ? 1 : 0);
-	  solved = 0;                      /* V případě řešení, smažte tento řádek! */
+	
+	//  solved = 0;                      /* V případě řešení, smažte tento řádek! */
 }
 
 int stackFull ( const tStack* s ) {
@@ -89,8 +91,10 @@ int stackFull ( const tStack* s ) {
 **
 ** Funkci implementujte jako jediný příkaz.
 */
-
-	  solved = 0;                      /* V případě řešení, smažte tento řádek! */
+	
+		return (s->top == (STACK_SIZE-1) ? 1 : 0);
+	
+	//  solved = 0;                      /* V případě řešení, smažte tento řádek! */
 }
 
 void stackTop ( const tStack* s, char* c ) {
@@ -103,14 +107,16 @@ void stackTop ( const tStack* s, char* c ) {
 ** Pro ověření, zda je zásobník prázdný, použijte dříve definovanou
 ** funkci stackEmpty.
 */
-
-	if (stackEmpty()) {
+	
+	if (stackEmpty(s)) {
 		stackError(SERR_TOP);
 	} else {
-		*c = ;
+	
+		*c = s->arr[s->top];
+		
 	}
 
-	  solved = 0;                      /* V případě řešení, smažte tento řádek! */
+	//  solved = 0;                      /* V případě řešení, smažte tento řádek! */
 }
 
 
@@ -126,8 +132,13 @@ void stackPop ( tStack* s ) {
 ** jednoduchost neděláme.
 ** 
 */
-
-	  solved = 0;                      /* V případě řešení, smažte tento řádek! */
+	if (stackEmpty(s)) {
+	} else {
+		s->arr[s->top] = NULL;
+		s->top -= 1;
+	}
+	
+	//  solved = 0;                      /* V případě řešení, smažte tento řádek! */
 }
 
 
@@ -140,7 +151,14 @@ void stackPush ( tStack* s, char c ) {
 ** funkci stackFull.
 */
 
-	  solved = 0;                      /* V případě řešení, smažte tento řádek! */
+	if (stackFull(s)) {
+		stackError(SERR_PUSH);
+	} else {
+		s->arr[s->top+1] = c;
+		s->top += 1;
+	}
+
+	//  solved = 0;                      /* V případě řešení, smažte tento řádek! */
 }
 
 /* Konec c202.c */
