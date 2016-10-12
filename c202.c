@@ -63,9 +63,9 @@ void stackInit ( tStack* s ) {
 
 	if (s == NULL) {
 		stackError(SERR_INIT);
-} else {
-	s->top = -1;
-}
+	} else {
+		s->top = -1;
+	}
 	  solved = 0;                      /* V případě řešení, smažte tento řádek! */
 }
 
@@ -104,13 +104,11 @@ void stackTop ( const tStack* s, char* c ) {
 ** funkci stackEmpty.
 */
 
-	if (stackEmpty) {
-
+	if (stackEmpty()) {
 		stackError(SERR_TOP);
-} else {
-
+	} else {
 		*c = ;
-}
+	}
 
 	  solved = 0;                      /* V případě řešení, smažte tento řádek! */
 }
