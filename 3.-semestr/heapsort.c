@@ -84,15 +84,6 @@ char * sort(char str[]) {
 
 		repairHeap(helpString, length);
 
-/*
- * zbytecne, protoze biggest number bude prvni
-        for (int i = 0; i < helpString->length; i++) {
-            if ((i+1) == helpString->length) {
-                break;
-            }
-            biggestNumber = (helpString->data[i] > helpString->data[i+1] ? helpString->data[i] : helpString->data[i+1]);
-        }
-  */
 		swap(&helpString[0], &helpString[length-1]);
 
 		length--;
