@@ -23,7 +23,7 @@ max = maxindex/Fs * Fs;
 fprintf('Maximum modulu spektra ma: %d Hz\n', max);
 
 
-%4) Filtrace
+%4) Filtr init
 %implementujeme filtr za pomoci fce zplane, aby se nam lepe videlo, zda-li je filtr stabilni
 %definice vstupu, pro pozdeji pouziti
 a = [0.2289 0.4662];
@@ -32,7 +32,16 @@ zplane(b,a);
 print('IIR_Filtr','-dpng');
 %filtr stabilni neni, protoze | pol/y (je pouze jeden) | > 1, pro stabilitu je treba, aby | pol/y | < 1, vice v doku
 
-%5) 
-[h,w] = freqz(b,a,512);
-plot(w);
+%5) Frekvencni charakteristika filtru
+H = freqz(b,a,Fs);
+f = ((0:Fs-1)/Fs * Fs / 2);
+plot(f,abs(H));
 print('IIR_Filtr_kmitocet', '-dpng');
+
+%6) Filtrace 
+h = filter(b,a,Signal);
+plot(f,h);
+result = fft(h);
+plot(f,abs(result));
+print('IIR_Filtrace', '-dpng');
+
