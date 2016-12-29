@@ -34,7 +34,8 @@ print('IIR_Filtr','-dpng');
 
 %5) Frekvencni charakteristika filtru
 H = freqz(b,a,Fs);
-f = ((0:Fs-1)/Fs * Fs/2);
+N = length(H);
+f = ((0:N-1)/N * Fs/2);
 plot(f,abs(H));
 print('IIR_Filtr_kmitocet', '-dpng');
 
@@ -48,8 +49,10 @@ print('IIR_Filtrace', '-dpng');
 
 
 %9) Samfin
-[x,y] = xcorr(Signal, 'biased');
-plot((-Fs+1:Fs-1), x);
+Rv = xcorr(Signal, 'biased');
+k = -Fs+1:Fs-1;
+plot(k, Rv);
 print('Signal','-dpng');
 
-fprintf('Echo: %d\n', y[10]);
+Rval = corrcoef(Rv,10);
+disp(Rval);
