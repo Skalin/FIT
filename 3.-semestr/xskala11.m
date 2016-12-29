@@ -1,3 +1,5 @@
+clean all;
+
 % 1) Nacteni signalu a zakladni prace nad nim
 [Signal, Fs] = audioread('xskala11.wav');
 
@@ -30,7 +32,7 @@ a = [0.2289 0.4662];
 b = [0.2324 -0.4112 0.2324];
 zplane(b,a);
 print('IIR_Filtr','-dpng');
-%filtr stabilni neni, protoze | pol/y (je pouze jeden) | > 1, pro stabilitu je treba, aby | pol/y | < 1, vice v doku
+%filtr stabilni je, protoze | pol/y (je pouze jeden) | < 1, pro stabilitu je treba, aby | pol/y | < 1, vice v doku
 
 %5) Frekvencni charakteristika filtru
 H = freqz(b,a,Fs);
@@ -40,11 +42,17 @@ plot(f,abs(H));
 print('IIR_Filtr_kmitocet', '-dpng');
 
 %6) Filtrace 
-h = filter(b,a,Signal);
-plot(f,h);
+%pro ucely filtru je treba doplnit a0, ackoliv neexistuje
+% a = c
+c = [1 0.2289 0.4662];
+h = filter(b,c,Signal);
 result = fft(h);
-plot(f,abs(result));
+plot(abs(result));
 print('IIR_Filtrace', '-dpng');
+
+%7) Max. hodnota spektra filtrovaneho signalu 
+maxFilter = abs(max(result));
+fprintf('Maximum modulu spektra ma: %d Hz\n', maxFilter);
 
 
 
