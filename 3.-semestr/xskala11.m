@@ -28,11 +28,11 @@ fprintf('Maximum modulu spektra ma: %d Hz\n', max);
 %4) Filtr init
 %implementujeme filtr za pomoci fce zplane, aby se nam lepe videlo, zda-li je filtr stabilni
 %definice vstupu, pro pozdeji pouziti
-a = [0.2289 0.4662];
+a = [1 0.2289 0.4662];
 b = [0.2324 -0.4112 0.2324];
 zplane(b,a);
 print('IIR_Filtr','-dpng');
-%filtr stabilni je, protoze | pol/y (je pouze jeden) | < 1, pro stabilitu je treba, aby | pol/y | < 1, vice v doku
+%filtr stabilni je, protoze poly jsou uvnitr jednotkove kruznice
 
 %5) Frekvencni charakteristika filtru
 H = freqz(b,a,Fs);
