@@ -1,4 +1,5 @@
-clean all;
+%Pro jistotu vse vycistime pred provadenim programu
+clear all;
 
 % 1) Nacteni signalu a zakladni prace nad nim
 [Signal, Fs] = audioread('xskala11.wav');
@@ -25,20 +26,19 @@ max = maxindex/Fs * Fs;
 fprintf('Maximum modulu spektra ma: %d Hz\n', max);
 
 
-%4) Filtr init
+%4) Inicializace filtru
 %implementujeme filtr za pomoci fce zplane, aby se nam lepe videlo, zda-li je filtr stabilni
 %definice vstupu, pro pozdeji pouziti
-a = [1 0.2289 0.4662];
+a = [1 0.2289 0.4662]; % 1 na zacatku filtru sice indexove reprezentuje a0, ve skutecnosti je zde ale jen z nutnosti
 b = [0.2324 -0.4112 0.2324];
 zplane(b,a);
 print('IIR_Filtr','-dpng');
 %filtr stabilni je, protoze poly jsou uvnitr jednotkove kruznice
 
 %5) Frekvencni charakteristika filtru
-H = freqz(b,a,Fs);
+H = freqz(b,a, Fs/2);
 N = length(H);
-f = ((0:N-1)/N * Fs/2);
-plot(f,abs(H));
+plot(abs(H));
 print('IIR_Filtr_kmitocet', '-dpng');
 
 %6) Filtrace 
@@ -51,16 +51,23 @@ plot(abs(result));
 print('IIR_Filtrace', '-dpng');
 
 %7) Max. hodnota spektra filtrovaneho signalu 
-maxFilter = abs(max(result));
+[~,maxindex2] = abs(max(result));
 fprintf('Maximum modulu spektra ma: %d Hz\n', maxFilter);
 
+%8) Filtrace strednich hodnot signalu
 
-
-%9) Samfin
+%9) Autokorelacni koeficient pro hodnoty k = <-50,50>
 Rv = xcorr(Signal, 'biased');
 k = -Fs+1:Fs-1;
-plot(k, Rv);
+plot(-50:50,Rv(Fs-1-50:Fs-1+50));
 print('Signal','-dpng');
 
-Rval = corrcoef(Rv,10);
-disp(Rval);
+%10) Koeficient R[10] autokorelace
+coeffr10 = Rv(Fs-1+10);
+fprintf('Koeficient R[10] = %d\n', coeffr10);
+
+%11) Casovy odhad struzene fce rozdeleni
+
+%12) Overeni spravne hodnoty rozdeleni
+
+%13) Autokorelacni efekt z fce spravne hodnoty rozdeleni
