@@ -43,24 +43,21 @@ print('IIR_Filtr_kmitocet', '-dpng');
 
 %6) Filtrace 
 %pro ucely filtru je treba doplnit a0, ackoliv neexistuje
-% a = c
-c = [1 0.2289 0.4662];
-h = filter(b,c,Signal);
+h = filter(b,a,Signal);
 result = fft(h);
-plot(abs(result));
+plot(Fs/2,abs(result));
 print('IIR_Filtrace', '-dpng');
 
 %7) Max. hodnota spektra filtrovaneho signalu 
-[~,maxindex2] = abs(max(result));
-fprintf('Maximum modulu spektra ma: %d Hz\n', maxFilter);
+[~,maxindex2] = max(abs(result(1:8000)));
+fprintf('Maximum modulu spektra ma: %d Hz\n', maxindex2);
 
 %8) Filtrace strednich hodnot signalu
 
 %9) Autokorelacni koeficient pro hodnoty k = <-50,50>
 Rv = xcorr(Signal, 'biased');
-k = -Fs+1:Fs-1;
 plot(-50:50,Rv(Fs-1-50:Fs-1+50));
-print('Signal','-dpng');
+print('Autokor_koef_signal','-dpng');
 
 %10) Koeficient R[10] autokorelace
 coeffr10 = Rv(Fs-1+10);
