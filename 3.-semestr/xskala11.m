@@ -45,7 +45,7 @@ print('IIR_Filtr_kmitocet', '-dpng');
 %pro ucely filtru je treba doplnit a0, ackoliv neexistuje
 h = filter(b,a,Signal);
 result = fft(h);
-plot(Fs/2,abs(result));
+plot(abs(result(1:8000)));
 print('IIR_Filtrace', '-dpng');
 
 %7) Max. hodnota spektra filtrovaneho signalu 
